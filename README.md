@@ -9,3 +9,6 @@ Pour le monitoring, nous avons utilisé un système qu'on peut consulter sur le 
 
 #### Déployement apres mise en place du monitoring
 ![Automatisation](/Image/image3.png)
+
+#### Monitoring via la page apache spark WebUI
+![Automatisation](/Image/image4.png)
