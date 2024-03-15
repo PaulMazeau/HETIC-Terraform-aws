@@ -317,3 +317,22 @@ resource "aws_internet_gateway" "gw_db" {
   vpc_id = aws_vpc.main_db.id
 }
 
+resource "aws_sns_topic" "cpu_alerts" {
+  name = "my-sns-topic"
+}
+
+resource "aws_cloudwatch_metric_alarm" "cpu_utilization" {
+  alarm_name          = "cpu-utilization-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/DocDB"
+  period              = "120"
+  statistic           = "Average"
+  threshold           = "80"
+  alarm_description   = "This metric checks cpu utilization"
+  alarm_actions       = [aws_sns_topic.cpu_alerts.arn]
+  dimensions = {
+    DBClusterIdentifier = aws_docdb_cluster.docdb.id
+  }
+}
